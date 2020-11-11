@@ -1,5 +1,5 @@
-from python_ibft import ibft
-from python_ibft.bls_threshold import reconstruct
+from python_ibft.ibft import ibft
+from python_ibft.ibft.bls_threshold import reconstruct
 import grpc
 from concurrent import futures
 import time
@@ -14,11 +14,11 @@ import argparse
 import base64
 
 # import the generated classes
-import ssv_pb2
-import ssv_pb2_grpc
-import validator_pb2_grpc
-import validator_pb2
-import attestation_pb2
+from rpc import ssv_pb2
+from rpc import ssv_pb2_grpc
+from rpc import validator_pb2_grpc
+from rpc import validator_pb2
+from rpc import attestation_pb2
 
 parser = argparse.ArgumentParser(description='Run SSV node.')
 parser.add_argument('process_id', metavar='process_id', type=int, 
@@ -137,7 +137,7 @@ class BeaconProxy(validator_pb2_grpc.BeaconNodeValidatorServicer):
 
 # Load the combined as well as threshold public keys
 # TODO: Currently only supports one key
-keys_json = json.load(open("validators.json", "r"))
+keys_json = json.load(open(args.validators, "r"))
 public_key = bytes.fromhex(keys_json[0]["public_key"])
 threshold_public_keys = [bytes.fromhex(x) for x in keys_json[0]["threshold_public_keys"]]
 
@@ -148,8 +148,12 @@ else:
     privkey_file = args.privkey
 
 # Start IBFT service
-ibft.load_config(args.parties, args.config, privkey_file, process_id)
+from python_ibft.ibft import server
+ibft.load_config(args.parties, args.config, privkey_file, process_id, server.message_primitive)
+server.define_api(ibft.ibft_message_queue, ibft.ibft_instances, ibft.ibft_parties, ibft.ibft_id)
 ibft.run_server()
+server.run_server(args.port)
+
 
 # Start scheduler
 scheduler = BackgroundScheduler()

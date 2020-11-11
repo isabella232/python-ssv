@@ -21,7 +21,7 @@ coefs = [privkey] + [random.randint(0, b.curve_order) for i in range(2)]
 privkeys = [eval_poly(x, coefs) for x in range(1,5)]
 
 printable_pubkeys = [G1_to_pubkey(b.multiply(b.G1, p)).hex() for p in privkeys]
-printable_privkeys = [base64.encodebytes(p.to_bytes(32, byteorder="big")).decode()[:-1] for p in privkeys]
+printable_privkeys = [base64.encodebytes(p.to_bytes(32, byteorder="little")).decode()[:-1] for p in privkeys]
 
 
 for i, p in enumerate(zip(printable_pubkeys, printable_privkeys)):

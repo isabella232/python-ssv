@@ -1,0 +1,58 @@
+graph {
+	node [shape = box];
+	
+
+	subgraph cluster_reg {
+		penwidth = 0;
+		label = "Regular client";
+		BP2P [label = "Beacon\nP2P", shape = oval, style = dashed];
+		inv [label = "i", style = invis];
+
+		subgraph cluster_reg1 {
+			label = "";
+			penwidth = 1;
+			BN -- VC;
+		}
+		
+		BP2P -- BN;
+		VC -- inv [style = invis];
+	}
+
+		
+	subgraph cluster_ssv{
+		penwidth = 0;
+		BP2P2 [label = "Beacon\nP2P", shape = oval, style = dashed];
+		SSVP2P [label="SSV\nP2P", shape = oval, style = dashed];
+
+		label = "SSV client";
+	
+		subgraph cluster_ssv1
+		{
+			penwidth = 1;
+			label = "SSV\nclient 2";
+			labelloc = "b";
+			BN1 [label="BN"];
+			SSV1 [label="SSV"];
+			VC1 [label="VC"];
+			BN1 -- SSV1 -- VC1;
+		}
+
+		subgraph cluster_ssv2
+		{
+			penwidth = 1;
+			label = "SSV\nclient 1";
+			labelloc = "b";
+			BN2 [label="BN"];
+			SSV2 [label="SSV"];
+			VC2 [label="VC"];
+			BN2 -- SSV2 -- VC2;
+		}
+
+		BP2P2 -- BN1;
+		BP2P2 -- BN2;
+
+		SSVP2P -- SSV1;
+		SSVP2P -- SSV2;
+	}
+
+}
