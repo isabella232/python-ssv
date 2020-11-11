@@ -1,5 +1,6 @@
-from python_ibft.ibft import ibft
-from python_ibft.ibft.bls_threshold import reconstruct
+import python_ibft as ibft
+from python_ibft.bls_threshold import reconstruct
+
 import grpc
 from concurrent import futures
 import time
@@ -14,11 +15,11 @@ import argparse
 import base64
 
 # import the generated classes
-from rpc import ssv_pb2
-from rpc import ssv_pb2_grpc
-from rpc import validator_pb2_grpc
-from rpc import validator_pb2
-from rpc import attestation_pb2
+from .rpc import ssv_pb2
+from .rpc import ssv_pb2_grpc
+from .rpc import validator_pb2_grpc
+from .rpc import validator_pb2
+from .rpc import attestation_pb2
 
 parser = argparse.ArgumentParser(description='Run SSV node.')
 parser.add_argument('process_id', metavar='process_id', type=int, 
