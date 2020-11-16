@@ -15,9 +15,9 @@ _sym_db = _symbol_database.Default()
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
-import rpc.attestation_pb2 as attestation__pb2
-import rpc.beacon_block_pb2 as beacon__block__pb2
-import rpc.validator_pb2 as validator__pb2
+from . import attestation_pb2 as attestation__pb2
+from . import beacon_block_pb2 as beacon__block__pb2
+from . import validator_pb2 as validator__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(

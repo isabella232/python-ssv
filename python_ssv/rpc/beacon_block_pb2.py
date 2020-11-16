@@ -11,7 +11,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-import rpc.attestation_pb2 as attestation__pb2
+from . import attestation_pb2 as attestation__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
